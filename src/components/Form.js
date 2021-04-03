@@ -3,41 +3,50 @@ import { useState } from "react";
 const Form = (props) => {
     const display = props.display;
 
-    const [quotes, setQuotes] = useState();
+    const [quotes, setQuotes] = useState([
+        {
+            id: 4,
+            name: 'Hary',
+            quote: 'Coba aja dulu'
+        },
+        {
+            id: 5,
+            name: 'Kemal',
+            quote: 'Awkwkwk 🐱‍🏍'
+        }
+    ]);
+    
+    const [id, setId] = useState();
     const [name, setName] = useState('');
     const [quote, setQuote] = useState('');
+
+    const insertQuote = () => {
+        // Save the new data to a temporary variable
+        const temp_quotes = quotes;
+        temp_quotes.push({
+            id: Math.floor(Math.random() * 100), // Get random number 0-100
+            name: (name.length === 0) ? "Anonymous" : name, 
+            quote
+        });
+
+        // Insert the new data to quotes
+        setQuotes(temp_quotes);
+
+        console.log(quotes);
+
+        // Confirmation
+        alert('Quote added');
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Push data to quotes on submit
-        // let id = name;
-        // let id = (quotes.id.length > 0) ? quotes.id[quotes.id.length - 1] : 1;
-        
-        // quotes.id.push(id);
-        // quotes.name.push(name);
-        // quotes.quote.push(quote);
+        // Insert data
+        insertQuote();
 
-        /* quotes[quotes.length - 1] = {
-            name: (name.length === 0) ? "Anonymous" : name, // set name to "Anonymous" if it's not filled
-            quote: quote
-        }; */
-        /* quotes[4] = {
-            name: "ppppppppppppp",
-            quote: "asdasdasdasdasd"s
-        }; */
-        
-        setQuotes([...quotes, {
-            name: (name.length === 0) ? "Anonymous" : name, 
-            quote
-        }]);
-
-        /* setTimeout(function () {
-            console.log(quotes);
-        }, 3000); */
-
-        // console.log(quotes.length);
-        console.log(quotes);
+        // Clear name and quote
+        setName('');
+        setQuote('');
     }
 
     return (
@@ -60,7 +69,7 @@ const Form = (props) => {
                         className="form-control" 
                         value={quote}
                         onChange={(e) => setQuote(e.target.value)}
-                        // required
+                        required
                         placeholder="Quote" />
                 </div>
                 <button type="submit" className="btn btn-primary w-100">Save</button>
