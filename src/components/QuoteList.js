@@ -1,20 +1,38 @@
 import { useState } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
+
 const QuoteList = () => {
     const [quotes, setQuotes] = useState([
         {
-            id: 0,
+            id: 4,
             name: 'Hary',
             quote: 'Coba aja dulu'
         },
         {
-            id: 1,
+            id: 5,
             name: 'Kemal',
             quote: 'Awkwkwk 🐱‍🏍'
         }
     ]);
 
-    console.log(quotes);
+    const [quotesBackup, setQuotesBackup] = useState(quotes); // this variable has the same value as quotes, it is for minimizing potential of bugs
+
+    const deleteQuote = (value) => {
+        console.log(value.name, 'sedang dihapus');
+
+        // Get index of the data that will be deleted
+        const index = quotesBackup.map(e => e.id).indexOf(value.id);
+
+        // Delete data in quotesBackup
+        setQuotesBackup(quotesBackup.splice(index, 1));
+
+        // Copy quotesBackup value to quotes
+        setQuotes(quotesBackup);
+
+        console.log('List terbaru', quotesBackup);
+    }
 
     return (
         <table className="table table-striped" >
@@ -29,16 +47,16 @@ const QuoteList = () => {
                                     type="button" 
                                     className="btn btn-danger"
                                     onClick={() => {
-                                        setQuotes(quotes.splice(value.id, 1));
-                                        // console.log(index, quotes);
+                                        // Delete the selected data
+                                        deleteQuote(value);
                                     }}>
-                                    Del {value.id}
+                                    <FontAwesomeIcon icon={faTrash} /> {value.id}
                                 </button>
                             </td>
                         </tr>
                     ))
                 }
-                {(quotes.length === 0) ? <tr><td className="text-center">Tidak ada quote</td></tr> : null}
+                {(quotes.length === 0) ? <tr><td className="text-center">No quotes</td></tr> : null}
             </tbody>
         </table>
     );
