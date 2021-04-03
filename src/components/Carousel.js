@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStepBackward, faStepForward, faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+
 import img from '../images/img.png';
 import img2 from '../images/img2.png';
 
@@ -18,29 +21,30 @@ const Carousel = () => {
                 </div>
                 <a className="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Previous</span>
+                    <span className="sr-only">
+                        Previous
+                    </span>
                 </a>
                 <a className="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
                     <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span className="sr-only">Next</span>
+                    <span className="sr-only">
+                        Next
+                    </span>
                 </a>
             </div>
 
             <div className="d-flex justify-content-center mx-auto mb-4">
                 {/* Button Previous */}
                 <button className="btn btn-light p-2">
-                    <i class="fas fa-caret-left"></i>
-                    Previous
+                    <FontAwesomeIcon icon={faStepBackward} />
                 </button>
                 {/* Button Pause/Resume */}
                 <button className="btn btn-light">
-                    <i className="fas fa-play"></i>
-                    Pause/Resume
+                    <FontAwesomeIcon icon={faPlay} /> / <FontAwesomeIcon icon={faPause} />
                 </button>
                 {/* Button Next */}
                 <button className="btn btn-light">
-                    <i className="fas fa-caret-right"></i>
-                    Next
+                    <FontAwesomeIcon icon={faStepForward} />
                 </button>
             </div>
         </div>
