@@ -1,5 +1,8 @@
 import { useState } from "react";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+
 import Carousel from './components/Carousel';
 import Form from './components/Form';
 import QuoteList from './components/QuoteList';
@@ -18,8 +21,12 @@ function App() {
         <Carousel />
       }
       
-      <button onClick={handleShowForm} className="btn btn-dark">Toggle Form</button>
+      <button onClick={handleShowForm} className="btn btn-dark">
+        <FontAwesomeIcon icon={faPencilAlt} />
+        Add Quotes
+      </button>
       
+        
       {
         /* Form */
         <Form display={showForm} />
