@@ -11,7 +11,8 @@ There is a man who likes to write a diary, one day he wants to insert any quotes
 - [x]  - Previos: Show previos quotes
 - [ ]  - Pause: Pause at certain quotes
 - [x] 3. Bonus 1: Make a form that contains, name, quote, and a button submit
-- [x] 4. Bonus 2: If the user fills the form and clicks the submit button, insert all the data into the slider
+- [ ] 4. Bonus 2: 
+- [ ]  - If the user fills the form and clicks the submit button, insert all the data into the slider
 - [x]  - If the user fill only quote textfield, and click the submit button make the default name as "Anonymous"
 - [x]  - Quote textfield is mandatory
 
