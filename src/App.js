@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
@@ -10,46 +10,101 @@ import QuoteList from './components/QuoteList';
 function App() {
   const [showForm, setShowForm] = useState(false);
 
+  // Data
+  const [quotes, setQuotes] = useState([
+    {
+      id: 4,
+      name: 'Elon Musk',
+      quote: 'Assalamualaikum guys'
+    },
+    {
+      id: 5,
+      name: 'Kemal',
+      quote: '2 Awkwkwk 🐱‍🏍'
+    },
+    {
+      id: 6,
+      name: 'Hary',
+      quote: '3 Coba aja dulu'
+    },
+    {
+      id: 7,
+      name: 'Bill Gates',
+      quote: 'Punteun'
+    }
+  ]);
+
   const handleShowForm = () => {
     setShowForm(!showForm);
   }
 
+  const updateQuotes = (data) => {
+    setQuotes(data);
+    console.log('App.js setelah update: ' + data.length);
+  }
+
+
+
+  /* FUNCTIONS FOR ADDING quotes */
+
+  const insertQuote = (name, quote) => {
+    // Save the new data to a temporary variable
+    const temp_quotes = quotes;
+
+    // Insert new data to temp_quotes
+    temp_quotes.push({
+      id: Math.floor(Math.random() * 100), // Get random number 0-100
+      name: (name.length === 0) ? "Anonymous" : name,
+      quote
+    });
+
+    // Update quotes values in parent from temp_quotes
+    updateQuotes(temp_quotes);
+  }
+
+  /* /FUNCTIONS FOR ADDING quotes */
+
+
+
+  /* FUNCTIONS FOR DELETING quotes */
+
+  const deleteQuote = (index) => {
+    console.log(quotes[index].name + ' sedang dihapus');
+
+    // Remove the selected data from quotes
+    const quotesAfterDelete = quotes.filter(function (obj) {
+      return obj.id !== quotes[index].id;
+    });
+
+    // Update quotes values in parent from temp_quotes
+    updateQuotes(quotesAfterDelete);
+  }
+
+  /* /FUNCTIONS FOR DELETING quotes */
+
+
+
+  useEffect(() => {
+    console.log('App.js rerenderd');
+  }, []);
+
   return (
     <div className="container">
-      {
-        /* Carousel */
-        <Carousel />
-      }
-      
+      { /* Carousel */}
+      <Carousel data={quotes} />
+
+
+      { /* Form */}
       <button onClick={handleShowForm} className="btn btn-dark">
         <FontAwesomeIcon icon={faPencilAlt} />
         Add Quotes
       </button>
-      
-        
-      {
-        /* Form */
-        <Form display={showForm} />
-      }
+      <Form display={showForm} data={quotes} insertQuote={insertQuote} />
 
-      <QuoteList />
+      { /* Quote List */}
+      <QuoteList data={quotes} deleteQuote={deleteQuote} />
     </div>
   );
 }
 
 export default App;
-
-/* 
-React App Challenge: There is a man who likes to write a diary, one day he wants to insert any quotes into his diary to make it look more attractive, make a quotes generator application to help him
-1. Make a single page that contains a single randomly quotes
-2. Convert that single randomly quotes to a slider, which have these button feature:
-  - Autoplay: after 5s show the next quotes until it reach the end (default)
-  - Autoplay backward: after 5s show the previos quotes until it reach the start
-  - Next: Show next quotes
-  - Previos: Show previos quotes
-  - Pause: Pause at certain quotes
-3. Bonus 1: Make a form that contains, name, quote, and a button submit
-4. Bonus 2: If the user fills the form and clicks the submit button, insert all the data into the slider
-  - If the user fill only quote textfield, and click the submit button make the default name as "Anonymous"
-  - Quote textfield is mandatory
-*/

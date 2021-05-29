@@ -1,38 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-const QuoteList = () => {
-    const [quotes, setQuotes] = useState([
-        {
-            id: 4,
-            name: 'Hary',
-            quote: 'Coba aja dulu'
-        },
-        {
-            id: 5,
-            name: 'Kemal',
-            quote: 'Awkwkwk 🐱‍🏍'
-        }
-    ]);
+const QuoteList = (props) => {
+    const quotes = props.data;
+    const deleteQuote = props.deleteQuote;
 
-    const [quotesBackup, setQuotesBackup] = useState(quotes); // this variable has the same value as quotes, it is for minimizing potential of bugs
+    console.log('Jumlah data initial: ' + quotes.length);
 
-    const deleteQuote = (value) => {
-        console.log(value.name, 'sedang dihapus');
-
-        // Get index of the data that will be deleted
-        const index = quotesBackup.map(e => e.id).indexOf(value.id);
-
-        // Delete data in quotesBackup
-        setQuotesBackup(quotesBackup.splice(index, 1));
-
-        // Copy quotesBackup value to quotes
-        setQuotes(quotesBackup);
-
-        console.log('List terbaru', quotesBackup);
-    }
+    useEffect(() => {
+        console.log('QuoteList.js rerenderd');
+    }, [props]);
 
     return (
         <table className="table table-striped" >
@@ -43,14 +22,14 @@ const QuoteList = () => {
                             <td>{value.name}</td>
                             <td>{value.quote}</td>
                             <td>
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className="btn btn-danger"
                                     onClick={() => {
                                         // Delete the selected data
-                                        deleteQuote(value);
+                                        deleteQuote(index);
                                     }}>
-                                    <FontAwesomeIcon icon={faTrash} /> {value.id}
+                                    <FontAwesomeIcon icon={faTrash} /> {index}
                                 </button>
                             </td>
                         </tr>
