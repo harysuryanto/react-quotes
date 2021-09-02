@@ -5,7 +5,7 @@ import { faStepBackward, faStepForward, faPlay, faPause, faQuoteLeft, faQuoteRig
 
 const Carousel = (props) => {
     const styleCarousel = {
-        backgroundColor: '#dddddd',
+        backgroundColor: '#000',
         backgroundImage: 'url(https://images.unsplash.com/photo-1511988578842-d8abe0f6351a?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80)',
         backgroundSize: 'cover',
         margin: '20px 0px',
@@ -55,6 +55,8 @@ const Carousel = (props) => {
         } else {
             // Play the carousel
         }
+
+        alert('Nothing happens... yet.');
     }
 
     useEffect(() => {
@@ -84,31 +86,6 @@ const Carousel = (props) => {
 
             {console.log('quotes di Carousel.js', quotes)}
 
-            {/* Carousel Controller */}
-            <div className="d-flex justify-content-center mx-auto mb-4">
-                {/* Button Previous */}
-                <button
-                    className="btn btn-light p-2"
-                    onClick={handlePreviousQuote}
-                >
-                    <FontAwesomeIcon icon={faStepBackward} />
-                </button>
-                {/* Button Pause/Resume */}
-                <button
-                    className="btn btn-light"
-                    onClick={handleTogglePauseCarousel}
-                >
-                    <FontAwesomeIcon icon={faPlay} /> / <FontAwesomeIcon icon={faPause} />
-                </button>
-                {/* Button Next */}
-                <button
-                    className="btn btn-light"
-                    onClick={handleNextQuote}
-                >
-                    <FontAwesomeIcon icon={faStepForward} />
-                </button>
-            </div>
-
             {/* Show current quote */}
             <p>Quotes index {currentQuotesIndex}</p>
 
@@ -133,6 +110,31 @@ const Carousel = (props) => {
                     </blockquote>
                 </div>
             )}
+
+            {/* Carousel Controller */}
+            <div className="d-flex justify-content-center mx-auto mb-4">
+                {/* Button Previous */}
+                <button
+                    className="btn btn-light p-2"
+                    onClick={handlePreviousQuote}
+                >
+                    <FontAwesomeIcon icon={faStepBackward} />
+                </button>
+                {/* Button Pause/Resume */}
+                <button
+                    className="btn btn-light"
+                    onClick={handleTogglePauseCarousel}
+                >
+                    <FontAwesomeIcon icon={faPlay} /> / <FontAwesomeIcon icon={faPause} />
+                </button>
+                {/* Button Next */}
+                <button
+                    className="btn btn-light"
+                    onClick={handleNextQuote}
+                >
+                    <FontAwesomeIcon icon={faStepForward} />
+                </button>
+            </div>
 
             {quotes.length === 0 && (
                 <p>No quotes</p>
