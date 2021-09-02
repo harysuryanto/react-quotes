@@ -23,22 +23,28 @@ const Carousel = (props) => {
     const [currentSecond, setCurrentSecond] = useState(0);
 
     const handlePreviousQuote = () => {
-        if (currentQuotesIndex > 0) {
-            // Change to previous quote if previous quote exists
-            setCurrentQuotesIndex(currentQuotesIndex - 1);
-        } else {
-            // Get back to last quote if previous quote doesn't exist
-            setCurrentQuotesIndex(quotes.length - 1);
+        // Only do the action if quote exists
+        if (quotes.length > 0) {
+            if (currentQuotesIndex > 0) {
+                // Change to previous quote if previous quote exists
+                setCurrentQuotesIndex(currentQuotesIndex - 1);
+            } else {
+                // Get back to last quote if previous quote doesn't exist
+                setCurrentQuotesIndex(quotes.length - 1);
+            }
         }
     }
 
     const handleNextQuote = () => {
-        if (currentQuotesIndex < quotes.length - 1) {
-            // Change to next quote if next quote exists
-            setCurrentQuotesIndex(currentQuotesIndex + 1);
-        } else {
-            // Get back to first quote if next quote doesn't exist
-            setCurrentQuotesIndex(0);
+        // Only do the action if quote exists
+        if (quotes.length > 0) {
+            if (currentQuotesIndex < quotes.length - 1) {
+                // Change to next quote if next quote exists
+                setCurrentQuotesIndex(currentQuotesIndex + 1);
+            } else {
+                // Get back to first quote if next quote doesn't exist
+                setCurrentQuotesIndex(0);
+            }
         }
     }
 
@@ -110,7 +116,7 @@ const Carousel = (props) => {
             <p>Current second {currentSecond}</p>
 
             {/* Carousel */}
-            { quotes.length > 0 && (
+            {quotes.length > 0 && (
                 <div style={styleCarousel}>
                     <blockquote className="blockquote">
                         <FontAwesomeIcon icon={faQuoteLeft} color={"white"} />
@@ -128,7 +134,7 @@ const Carousel = (props) => {
                 </div>
             )}
 
-            { quotes.length === 0 && (
+            {quotes.length === 0 && (
                 <p>No quotes</p>
             )}
 
