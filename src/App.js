@@ -49,11 +49,11 @@ function App() {
 
   const insertQuote = (name, quote) => {
     // Save the new data to a temporary variable
-    const temp_quotes = quotes;
+    const temp_quotes = [...quotes];
 
     // Insert new data to temp_quotes
     temp_quotes.push({
-      id: Math.floor(Math.random() * 100), // Get random number 0-100
+      id: new Date().getTime(), // Using timestamp to prevent duplicate numbers
       name: (name.length === 0) ? "Anonymous" : name,
       quote
     });
@@ -86,7 +86,7 @@ function App() {
 
   useEffect(() => {
     console.log('App.js rerenderd');
-  }, []);
+  }, [quotes]);
 
   return (
     <div className="container">
