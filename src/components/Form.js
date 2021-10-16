@@ -1,49 +1,90 @@
 import { useState } from "react";
 
+import { MDBBtn,
+    MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,
+  } from 'mdb-react-ui-kit';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+
 const Form = (props) => {
-    const display = props.display;
+    // const display = props.display;
     const insertQuote = props.insertQuote;
 
+    const [centredModal, setCentredModal] = useState(false);
+    
     const [name, setName] = useState('');
     const [quote, setQuote] = useState('');
+    
+    const handleToggleShow = () => setCentredModal(!centredModal);
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        // Insert data
-        insertQuote(name, quote);
+        // Check if the quote is empty
+        if (quote === '') {
+          alert('Please fill the quote');
+        } else {
+          // Insert data
+          insertQuote(name, quote);
+  
+          // Clear name and quote
+          setName('');
+          setQuote('');
 
-        // Clear name and quote
-        setName('');
-        setQuote('');
+          // Close the modal
+          handleToggleShow();
+        }
     }
 
     return (
-        <div className="container" style={{ display: (display) ? 'block' : 'none' }}>
-            <form onSubmit={handleSubmit} className="col-sm-12 col-md-8 mx-auto">
-                <p className="h3 text-center mb-3">Add quote</p>
+      <>
+        <div className="d-flex justify-content-end my-3">
+          <MDBBtn color='primary' className='m-1' style={{borderRadius: '20px'}} onClick={handleToggleShow} >
+            <FontAwesomeIcon icon={faPlus} />
+          </MDBBtn>
+        </div>
 
-                <div className="form-group">
+        <MDBModal tabIndex='-1' show={centredModal} getOpenState={(e: any) => setCentredModal(e)}>
+          <MDBModalDialog centered>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle>Add quote</MDBModalTitle>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <form onSubmit={handleSubmit} className="col-12 mx-auto">
+                  <div className="form-group mb-4">
                     <input
                         type="text"
-                        className="form-control"
+                        className="form-control col-12"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         autoFocus
-                        placeholder="Name" />
-                </div>
-                <div className="form-group">
+                        placeholder="Author name" />
                     <input
-                        type="text"
-                        className="form-control"
-                        value={quote}
-                        onChange={(e) => setQuote(e.target.value)}
-                        required
-                        placeholder="Quote" />
-                </div>
-                <button type="submit" className="btn btn-primary w-100">Save</button>
-            </form>
-        </div>
+                      type="text"
+                      className="form-control"
+                      value={quote}
+                      onChange={(e) => setQuote(e.target.value)}
+                      required
+                      placeholder="Quote" />
+                  </div>
+                </form>
+              </MDBModalBody>
+              <MDBModalFooter>
+                <MDBBtn color='secondary' onClick={handleToggleShow}>Close</MDBBtn>
+                <MDBBtn color='primary' onClick={handleSubmit}>Save</MDBBtn>
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </>
     );
 }
 

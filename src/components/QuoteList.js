@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +21,7 @@ const QuoteList = (props) => {
                         <tr key={value.id}>
                             <td>{value.name}</td>
                             <td>{value.quote}</td>
-                            <td>
+                            <td className="d-flex justify-content-end">
                                 <button
                                     type="button"
                                     className="btn btn-danger"

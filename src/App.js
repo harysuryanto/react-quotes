@@ -1,15 +1,10 @@
 import { useState, useEffect } from "react";
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons';
-
 import Carousel from './components/Carousel';
 import Form from './components/Form';
 import QuoteList from './components/QuoteList';
 
 function App() {
-  const [showForm, setShowForm] = useState(false);
-
   // Data
   const [quotes, setQuotes] = useState([
     {
@@ -33,10 +28,6 @@ function App() {
       quote: 'Punteun'
     }
   ]);
-
-  const handleShowForm = () => {
-    setShowForm(!showForm);
-  }
 
   const updateQuotes = (data) => {
     setQuotes(data);
@@ -91,15 +82,18 @@ function App() {
   return (
     <div className="container">
       { /* Carousel */}
-      <Carousel data={quotes} />
+      
+      {quotes.length > 0 && (
+        <Carousel data={quotes} />
+      )}
 
-
-      { /* Form */}
-      <button onClick={handleShowForm} className="btn btn-dark">
+      { /* Modal */}
+      <Form data={quotes} insertQuote={insertQuote} />
+      
+      {/* <button onClick={handleShowForm} className="btn btn-dark">
         <FontAwesomeIcon icon={faPencilAlt} />
         Add Quotes
-      </button>
-      <Form display={showForm} data={quotes} insertQuote={insertQuote} />
+      </button> */}
 
       { /* Quote List */}
       <QuoteList data={quotes} deleteQuote={deleteQuote} />

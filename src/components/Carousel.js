@@ -12,15 +12,14 @@ const Carousel = (props) => {
         minHeight: '200px',
         padding: '50px 10%',
         width: '100%',
+        borderRadius: '20px',
     }
 
     const quotes = props.data;
 
     const [currentQuotesIndex, setCurrentQuotesIndex] = useState(0);
 
-    const [isCarouselPlaying, setIsCarouselPlaying] = useState(true);
-
-    const [currentSecond, setCurrentSecond] = useState(0);
+    const [isCarouselPlaying, setIsCarouselPlaying] = useState(false);
 
     const handlePreviousQuote = () => {
         // Only do the action if quote exists
@@ -41,95 +40,104 @@ const Carousel = (props) => {
             if (currentQuotesIndex < quotes.length - 1) {
                 // Change to next quote if next quote exists
                 setCurrentQuotesIndex(currentQuotesIndex + 1);
+                console.log('[handleNextQuote()]: next quote');
             } else {
                 // Get back to first quote if next quote doesn't exist
                 setCurrentQuotesIndex(0);
+                console.log('[handleNextQuote()]: back to first quote');
             }
         }
     }
 
     const handleTogglePauseCarousel = () => {
         if (isCarouselPlaying) {
+            setIsCarouselPlaying(false);
+
             // Pause the carousel
             // clearInterval(interval);
         } else {
+            setIsCarouselPlaying(true);
+            
             // Play the carousel
         }
 
-        alert('Nothing happens... yet.');
+        // alert('Nothing happens... yet.');
     }
 
     useEffect(() => {
-        /* var carouselInterval = 5; // seconds
-        var interval = setInterval(() => {
-            // handleNextQuote();
-            
-            if (currentSecond < carouselInterval) {
-                // Add 1 second
-                setCurrentSecond(currentSecond + 1);
-                handleNextQuote();
-                console.log('masuk if');
-            } else {
-                // Get back to second 0
-                setCurrentSecond(0);
-                console.log('masuk else');
-            }
+        console.log('Carousel.js rerenderd');
 
-            console.log(currentSecond, '<', carouselInterval, currentSecond < carouselInterval);
-        }, 1000);
-        return () => interval; */
-        console.log('Carousel.js useEffect: quotes value updated ' + quotes.length);
-    });
+        var counter = 0;
+        var carouselInterval = 5; // seconds
+
+        console.log('Waktu dimulai dari 0');
+
+        // Deactivated because it causes error when deleting items few times
+        /* setInterval(() => {
+            console.log('Waktu sekarang: ', counter);
+
+            // Add 1 second
+            counter++;
+            console.log('+1 detik');
+
+            if (counter >= carouselInterval) {
+                // Reset the time, get back to second 0
+                counter = 0;
+                console.log('reset waktu & ganti quote');
+
+                // Show next quote
+                handleNextQuote();
+            }
+        }, 1000); */
+    }, []);
 
     return (
         <div>
-
-            {console.log('quotes di Carousel.js', quotes)}
-
             {/* Show current quote */}
             <p>Quotes index {currentQuotesIndex}</p>
 
-            {/* Show current second */}
-            <p>Current second {currentSecond}</p>
-
             {/* Carousel */}
-            {quotes.length > 0 && (
-                <div style={styleCarousel}>
-                    <blockquote className="blockquote">
-                        <FontAwesomeIcon icon={faQuoteLeft} color={"white"} />
+            <div style={styleCarousel}>
+                <blockquote className="blockquote">
+                    <FontAwesomeIcon icon={faQuoteLeft} color={"white"} />
 
-                        <p className="text-white h2 mb-0 font-italic">
-                            {quotes[currentQuotesIndex].quote}
-                        </p>
+                    <p className="text-white h2 mb-0 font-italic">
+                        {quotes[currentQuotesIndex].quote}
+                    </p>
 
-                        <FontAwesomeIcon icon={faQuoteRight} color={"white"} />
+                    <FontAwesomeIcon icon={faQuoteRight} color={"white"} />
 
-                        <footer className="blockquote-footer text-light">
-                            {quotes[currentQuotesIndex].name}
-                        </footer>
-                    </blockquote>
-                </div>
-            )}
+                    <footer className="blockquote-footer text-light">
+                        {quotes[currentQuotesIndex].name}
+                    </footer>
+                </blockquote>
+            </div>
 
             {/* Carousel Controller */}
             <div className="d-flex justify-content-center mx-auto mb-4">
                 {/* Button Previous */}
                 <button
-                    className="btn btn-light p-2"
+                    className="btn"
                     onClick={handlePreviousQuote}
                 >
                     <FontAwesomeIcon icon={faStepBackward} />
                 </button>
                 {/* Button Pause/Resume */}
                 <button
-                    className="btn btn-light"
+                    className="btn"
                     onClick={handleTogglePauseCarousel}
                 >
-                    <FontAwesomeIcon icon={faPlay} /> / <FontAwesomeIcon icon={faPause} />
+                    {isCarouselPlaying === true && (
+                        <FontAwesomeIcon icon={faPause} />
+                    )}
+                    {isCarouselPlaying === false && (
+                        <FontAwesomeIcon icon={faPlay} />
+                    )}
+                    
                 </button>
                 {/* Button Next */}
                 <button
-                    className="btn btn-light"
+                    className="btn"
                     onClick={handleNextQuote}
                 >
                     <FontAwesomeIcon icon={faStepForward} />
